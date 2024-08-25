@@ -20,7 +20,7 @@ export const register = async (req, res) => {
         
         const userSaved = await newUser.save();
 
-        const token = await createAccesToken({ id: userSaved._id})
+        const token = await createAccesToken({ id: userSaved._id })
         res.cookie('token', token);
         
         res.json({
@@ -32,9 +32,9 @@ export const register = async (req, res) => {
         });
 
     } catch (error) {
-        console.log(error);
+        res.status(500).json({ message: error.message});
     }
-}
+};
 
 export const login = async (req, res) => {
     const { email, password } = req.body;
@@ -48,7 +48,7 @@ export const login = async (req, res) => {
 
         if (!isMAtch) return res(400).json({ message: 'Incorrect Password' });
 
-        const token = await createAccesToken({ id: userFound._id})
+        const token = await createAccesToken({ id: userFound._id })
         res.cookie('token', token);
         
         res.json({
@@ -62,4 +62,11 @@ export const login = async (req, res) => {
     } catch (error) {
         console.log(error);
     }
-}
+};
+
+export const logout =  (req, res) => {
+    res.cookie("token", "", {
+        expires: new Date(0)
+    });
+    return res.sendStatus(200);
+};
