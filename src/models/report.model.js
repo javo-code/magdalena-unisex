@@ -1,10 +1,6 @@
 import mongoose from "mongoose";
 
 const reportSchema = new mongoose.Schema({
-    date: {
-        type: Date,
-        default: Date.now,
-    },
     patient: {
         type: String,
         require: true,

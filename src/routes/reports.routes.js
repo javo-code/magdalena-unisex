@@ -4,15 +4,25 @@ import { authRequired } from "../middlewares/validateToken.js";
 
 const router = Router();
 
-router.get("/reports", authRequired, getReports);
+router.get("/reports", authRequired, getReports, (req, res)=>{
+    res.send('reports');
+});
 
-router.post("/reports", authRequired, createReport);
+router.post("/reports", authRequired, createReport, (req, res)=>{
+    res.send('report created');
+});
 
-router.get("/reports/:id", authRequired, getReport );
+router.get("/reports/:id", authRequired, getReport, (req, res)=>{
+    res.send("you got a report by it's ID");
+});
 
-router.put("/reports/:id", authRequired, updateReport);
+router.put("/reports/:id", authRequired, updateReport, (req, res)=>{
+    res.send('report updated');
+});
 
-router.delete("/reports/:id", authRequired, deleteReport);
+router.delete("/reports/:id", authRequired, deleteReport, (req, res)=>{
+    res.send('report deleted');
+});
 
 
 export default router;
