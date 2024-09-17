@@ -1,8 +1,10 @@
 import Report from "../models/report.model.js";
-
+//import { authRequired } from "../middlewares/authRequired.js";
 export const getReports = async (req, res) => {
     try {
-        const reports = await Report.find();
+        const reports = await Report.find({
+            user: req.user.id
+        });
         res.json(reports);
     } catch (error) {
         res.status(500).json({ message: "Error fetching reports" });
@@ -12,7 +14,8 @@ export const getReports = async (req, res) => {
 export const createReport = async (req, res) => {
     try {
         const { patient, report } = req.body;
-        const newReport = new Report({ patient, report });
+
+        const newReport = new Report({ patient, report, user: req.user.id });
         const savedReport = await newReport.save();
         res.json(savedReport);
     } catch (error) {
