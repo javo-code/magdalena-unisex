@@ -3,8 +3,9 @@ import Report from "../models/report.model.js";
 export const getReports = async (req, res) => {
     try {
         const reports = await Report.find({
-            user: req.user.id
-        });
+            user: req
+                .user.id
+        }).populate("user");
         res.json(reports);
     } catch (error) {
         res.status(500).json({ message: "Error fetching reports" });
@@ -13,9 +14,9 @@ export const getReports = async (req, res) => {
 
 export const createReport = async (req, res) => {
     try {
-        const { patient, report } = req.body;
+        const { patientname, date, report } = req.body;
 
-        const newReport = new Report({ patient, report, user: req.user.id });
+        const newReport = new Report({ patientname, date, report, user: req.user.id });
         const savedReport = await newReport.save();
         res.json(savedReport);
     } catch (error) {
@@ -25,7 +26,7 @@ export const createReport = async (req, res) => {
 
 export const getReport = async (req, res) => {
     try {
-        const report = await Report.findById(req.params.id);
+        const report = await Report.findById(req.params.id).populate("user");
         if (!report) return res.status(404).json({ message: "Report not found" });
         res.json(report);
     } catch (error) {

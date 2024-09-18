@@ -4,13 +4,13 @@ import { createAccesToken } from "../libs/jwt.js";
 
 
 export const register = async (req, res) => {
-    const { userName, email, password } = req.body;
+    const { username, email, password } = req.body;
 
     try {
         const paswwordHash = await bcrypt.hash(password, 10);
 
         const newUser = new User({
-            userName,
+            username,
             email,
             password: paswwordHash
         });
@@ -24,7 +24,7 @@ export const register = async (req, res) => {
         
         res.json({
             id: userSaved._id,
-            user: userSaved.userName,
+            user: userSaved.username,
             email: userSaved.email,
             createdAt: userSaved.createdAt,
             updatedeAt: userSaved.updatedAt,
@@ -52,7 +52,7 @@ export const login = async (req, res) => {
         
         res.json({
             id: userFound._id,
-            user: userFound.userName,
+            user: userFound.username,
             email: userFound.email,
             createdAt: userFound.createdAt,
             updatedeAt: userFound.updatedAt,
@@ -77,7 +77,7 @@ export const profile = async (req, res) => {
 
     return res.json({
         id: userFound._id,
-        userName: userFound.userName,
+        username: userFound.username,
         email: userFound.email,
         createdAt: userFound.createdAt,
         updatedAt: userFound.updatedAt,

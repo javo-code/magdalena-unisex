@@ -2,14 +2,10 @@ import mongoose from "mongoose";
 //import { authRequired } from "../middlewares/validateToken";
 
 const reportSchema = new mongoose.Schema({
-    patient: {
+    patientname: {
         type: String,
         require: true,
     },
-/*     date: {
-        type: Date,
-        required: true,
-    }, */
     report: {
         type: String,
         require: true,
@@ -18,6 +14,10 @@ const reportSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User',
         require: true
+    },
+    date: {
+        type: String,
+        default: Date.now,
     },
 }, {
     timestamps: true,
